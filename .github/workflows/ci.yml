@@ -35,7 +35,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: vintasoftware/vintasend-celery
+          slug: vintasoftware/vintasend-jinja
           fail_ci_if_error: false
           directory: ./
           files: ./coverage-*.xml
