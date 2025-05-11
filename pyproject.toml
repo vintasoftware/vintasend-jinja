@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vintasend-jinja"
-version = "0.1.0"
+version = "0.1.1"
 description = "Jinja email template renderer implementation for VintaSend"
 authors = ["Hugo bessa <hugo@vinta.com.br>"]
 license = "MIT"
