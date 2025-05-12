@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vintasend-jinja"
-version = "0.1.1"
+version = "0.1.2"
 description = "Jinja email template renderer implementation for VintaSend"
 authors = ["Hugo bessa <hugo@vinta.com.br>"]
 license = "MIT"
@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "<3.14,>=3.10"
-vintasend = "*"
+vintasend = "0.1.2"
 jinja2 = "^3.1.4"
 
 [tool.poetry.group.dev.dependencies]
