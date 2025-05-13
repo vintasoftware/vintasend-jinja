@@ -1,14 +1,18 @@
 [tool.poetry]
 name = "vintasend-jinja"
-version = "0.1.2"
+version = "0.1.4"
 description = "Jinja email template renderer implementation for VintaSend"
 authors = ["Hugo bessa <hugo@vinta.com.br>"]
 license = "MIT"
 readme = "README.md"
+packages = [{ include = "vintasend_jinja" }]
+include = [
+  { path = "vintasend_jinja/py.typed", format = "wheel" }
+]
 
 [tool.poetry.dependencies]
 python = "<3.14,>=3.10"
-vintasend = "0.1.2"
+vintasend = "0.1.4"
 jinja2 = "^3.1.4"
 
 [tool.poetry.group.dev.dependencies]
