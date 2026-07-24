@@ -4,6 +4,9 @@ from unittest import TestCase
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from vintasend.constants import NotificationStatus, NotificationTypes
 from vintasend.services.dataclasses import Notification
+from vintasend.services.notification_template_renderers.base_templated_email_renderer import (
+    EmailTemplateContent,
+)
 
 from vintasend_jinja.services.notification_template_renderers.jinja_templated_email_renderer import (
     JinjaTemplatedEmailRenderer,
@@ -33,14 +36,33 @@ class JinjaTemplatedEmailRendererTestCase(TestCase):
             "test_body": "this_is_my_test_body_string",
         }
 
-    def test_render(self):
-        renderer = JinjaTemplatedEmailRenderer(environment=Environment(
+    def build_renderer(self) -> JinjaTemplatedEmailRenderer:
+        return JinjaTemplatedEmailRenderer(environment=Environment(
             loader=FileSystemLoader(["vintasend_jinja/templates"]),
             autoescape=select_autoescape()
         ))
+
+    def test_render(self):
+        renderer = self.build_renderer()
         notification = self.create_notification()
         context = self.create_notification_context(notification)
         email = renderer.render(notification, context)
         assert "this_is_my_test_subject_string" in email.subject
         assert "this_is_my_test_preheader_string" in email.body
+        assert "this_is_my_test_preheader_string" in email.preheader
+        assert "this_is_my_test_body_string" in email.body
+
+    def test_render_from_template_content(self):
+        renderer = self.build_renderer()
+        notification = self.create_notification()
+        context = self.create_notification_context(notification)
+        template_content = EmailTemplateContent(
+            subject_template="vintasend_jinja/emails/test/test_templated_email_subject.txt",
+            body_template="vintasend_jinja/emails/test/test_templated_email_body.html",
+            preheader_template="vintasend_jinja/emails/test/test_templated_email_preheader.html",
+        )
+        email = renderer.render_from_template_content(notification, template_content, context)
+        assert "this_is_my_test_subject_string" in email.subject
+        assert "this_is_my_test_preheader_string" in email.body
+        assert "this_is_my_test_preheader_string" in email.preheader
         assert "this_is_my_test_body_string" in email.body
