@@ -37,10 +37,12 @@ class JinjaTemplatedEmailRendererTestCase(TestCase):
         }
 
     def build_renderer(self) -> JinjaTemplatedEmailRenderer:
-        return JinjaTemplatedEmailRenderer(environment=Environment(
-            loader=FileSystemLoader(["vintasend_jinja/templates"]),
-            autoescape=select_autoescape()
-        ))
+        return JinjaTemplatedEmailRenderer(
+            environment=Environment(
+                loader=FileSystemLoader(["vintasend_jinja/templates"]),
+                autoescape=select_autoescape(),
+            )
+        )
 
     def test_render(self):
         renderer = self.build_renderer()
